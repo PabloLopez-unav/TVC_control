@@ -29,7 +29,7 @@ Requirements: uv sync
 Usage:        uv run python connect_and_enable.py
 """
 
-from pymodbus.client import ModbusTcpClient
+from pymodbus import ModbusTcpClient
 import time
 
 DRIVE_IP = "169.254.78.209"
@@ -125,12 +125,6 @@ def enable_axis(client, name, regs):
     print_status(client, regs)
 
 
-def disable_axis(client, name, regs):
-    print(f"  Disabling {name}...")
-    trigger(client, regs["dis"])
-    time.sleep(0.2)
-
-
 def main():
     print(f"Connecting to AKD2G at {DRIVE_IP}:{PORT} ...")
     client = ModbusTcpClient(DRIVE_IP, port=PORT)
@@ -138,8 +132,13 @@ def main():
     if not client.connect():
         print("Connection failed. Check IP, subnet, and Modbus TCP setting in Workbench.")
         return
-
+    
     print("Connected!\n")
+
+    print("Suck it!")
+    time.sleep(1)
+
+
 
     print("=== Initial Status ===")
     for name, regs in AXES.items():
@@ -149,10 +148,6 @@ def main():
     print("\n=== Enabling Both Axes ===")
     for name, regs in AXES.items():
         enable_axis(client, name, regs)
-
-    print("\n=== Disabling Both Axes ===")
-    for name, regs in AXES.items():
-        disable_axis(client, name, regs)
 
     client.close()
     print("\nDone.")

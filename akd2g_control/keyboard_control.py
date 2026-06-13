@@ -17,11 +17,11 @@ from pymodbus.client import ModbusTcpClient
 DRIVE_IP  = "169.254.78.209"
 PORT      = 502
 SLAVE_ID  = 1
-SPEED_RPM = 100.0
+SPEED_RPM = 5000.0
 
 AXES = {
-    "Axis 1": {"en": 0,  "dis": 1,  "active": 4,  "faulted": 10, "vl_cmd": 64},
-    "Axis 2": {"en": 62, "dis": 63, "active": 54, "faulted": 60, "vl_cmd": 66},
+    "Axis 1": {"en": 94,  "dis": 120, "active": 4,  "motion": 6,  "dissources": 8,  "faulted": 10, "vl_cmd": 36},
+    "Axis 2": {"en": 144, "dis": 139, "active": 54, "motion": 56, "dissources": 58, "faulted": 60, "vl_cmd": 86},
 }
 
 KEY_MAP = {
@@ -36,9 +36,9 @@ running    = True
 
 
 def write_float32(client, address, value):
-    packed = struct.pack(">f", float(value))
-    hi = (packed[0] << 8) | packed[1]
-    lo = (packed[2] << 8) | packed[3]
+    raw = int(round(float(value) * 1000)) & 0xFFFFFFFF
+    hi = (raw >> 16) & 0xFFFF
+    lo = raw & 0xFFFF
     client.write_registers(address=address, values=[hi, lo], device_id=SLAVE_ID)
 
 
