@@ -43,7 +43,7 @@ AXES = {
 
 
 def read32(client, address):
-    r = client.read_holding_registers(address=address, count=2)
+    r = client.read_holding_registers(address=address, count=2, device_id=SLAVE_ID)
     if r.isError():
         print(f"  [read error @ {address}] {r}")
         return None
@@ -108,10 +108,10 @@ def can_enable_axis(client, name, regs):
 
 def trigger(client, address):
     """Trigger an ActionCommand: write 0 then 1 to guarantee rising edge."""
-    r = client.write_register(address=address, value=0)
+    r = client.write_register(address=address, value=0, device_id=SLAVE_ID)
     if r.isError(): print(f"  [write error @ {address}] {r}")
     time.sleep(0.1)
-    r = client.write_register(address=address, value=1)
+    r = client.write_register(address=address, value=1, device_id=SLAVE_ID)
     if r.isError(): print(f"  [write error @ {address}] {r}")
 
 
