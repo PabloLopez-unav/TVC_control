@@ -1,0 +1,9 @@
+[project]
+name = "akd2g-control"
+version = "0.1.0"
+description = "AKD2G dual-axis drive connection helper"
+requires-python = ">=3.10"
+dependencies = ["pymodbus>=3.7,<4", "pynput>=1.7"]
+
+[tool.uv]
+package = false
