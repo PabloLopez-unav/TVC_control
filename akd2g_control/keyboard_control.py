@@ -28,7 +28,7 @@ KEY_MAP = {
     "w":               ("Axis 1", +SPEED_RPM),
     "s":               ("Axis 1", -SPEED_RPM),
     keyboard.Key.up:   ("Axis 2", +SPEED_RPM),
-    keyboard.Key.down: ("Axis 2", -SPEED_RPM),
+    keyboard.Key.down: ("Axis 2", -SPEED_RPM)
 }
 
 velocities = {"Axis 1": 0.0, "Axis 2": 0.0}
